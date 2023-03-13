@@ -6,9 +6,9 @@
 
 Project: TEMAS - Turkey Earthquake Monitoring and Analysis System
 
-Latest Version: 0.7.1 
+Latest Version: 0.7.2
 
-Released: 12 March 2023 
+Released: 13 March 2023 
 
 by: Marcus Zou
 
@@ -32,7 +32,7 @@ by: Marcus Zou
 
 ```
  1. Python (3.10.6) + Folium library + Web Scraping technology
- 2. Back-end databasing
+ 2. Back-end databasing (SQLite3, will seek mySQL if the dataset gets big in the future)
  3. Docker deployment
 ```
 
@@ -42,6 +42,86 @@ by: Marcus Zou
   pip install -r requirements.txt
 ```
 
+
+
+## How to use the project?
+
+Two ways to use my project (**Method #1 and #3 are preferred** since it's just a piece of cake):
+
+1. **Docker-Pull** method:
+
+   1A) pull down the very Docker image:
+
+   ```shell
+   docker pull marcuszou/temas:0.7.1
+   ```
+
+   1B) run the docker image into a container:
+
+   ```
+   docker run -d -p 8000:8000 --name "TEMAS-0.7.1" -t temas:0.7.1
+   ```
+
+   1C) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.
+
+   
+
+   **Note**: the web server and job runner (the daily scrapper) have been configured such that everything is running smoothly and automatically unless you shut down the docker container.
+
+   
+
+2. **Fork-Git-Repo** method:
+
+   2A) Clone the very repo:
+
+   ```
+   git clone https://github.com/marcuszou/earthquake-in-turkey.git
+   ```
+
+   2B) enter into the project folder and run the simple web server - Python module http.server:
+
+   ```
+   cd earthquake-in-turkey
+   python ./app-httpsvr.py
+   ```
+
+   2C) schedule the `app-updater.py` as below:
+
+   * for `Linux/Mac` user, please use the `crontab` file:
+
+     ```
+     cron ./mycrontab
+     ```
+
+   * for `Windows` user, please use the `Task Scheduler` to schedule to run `./app-updater.py` periodically.
+   
+   2D) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.
+   
+   
+   
+3. **Fork-n-Dock** method:
+   
+   3A) Clone the very repo:
+   
+   ```
+   git clone https://github.com/marcuszou/earthquake-in-turkey.git
+   ```
+   
+   3B) enter into the project folder and build a docker image:
+   
+   ```
+   cd earthquake-in-turkey
+   docker build -t mytemas:0.7.2 .
+   ```
+   
+   3C) Run the docker image into a container:
+   
+   ```
+   docker run -d -p 8000:8000 --name "TEMAS-0.7.2" -t mytemas:0.7.2
+   ```
+   
+   3D) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.
+
 ## Special Technical Report when Dockerizing the Project
 
  You may fork my project to your own space to play around and there are some observations to be noted as below:
@@ -50,11 +130,13 @@ by: Marcus Zou
 
 * Then the best smaller docker image shall be: `Python-3.10.6-slim` (45 MB only for downloading), which need you to install `cron` module in the `Dockerfile` though. 
 
-* A light-weight Http Server has to run to serve the http requests to our website (`index.html`).
+* A light-weight Python module based Http Server has to run to serve the http requests to our website (`index.html`).
 
   
 
 ## Versions
+
+* v0.7.2 build 2023-03-13 - Changes on the job scheduler, .ignore files and finalizing. Pushed to github and cloud.
 
 * v0.7.1 build 2023-03-12 - Scheduled a Data Updater and dockerized the project into a cloud service.
 

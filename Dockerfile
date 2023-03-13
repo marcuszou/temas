@@ -1,16 +1,21 @@
+# Base image
 FROM python:3.10.6-slim
 LABEL maintainer="https://github.com/marcuszou/"
 
-RUN apt-get update && apt-get install -y cron
+# Update, install cron
+RUN apt-get update && apt-get install cron -y
+
+# Copy files to work directory
 WORKDIR /app
 COPY . /app
-
+# Install Python libraries
 RUN pip install -r requirements.txt
-RUN chmod a+x /app/app-httpsvr.py
 
-COPY mycrontab /etc/cron.d/mycrontab
-RUN chmod 0644 /etc/cron.d/mycrontab
-RUN /usr/bin/crontab /etc/cron.d/mycrontab
+# Create a cron job that runs the Python script every hour
+RUN echo "0 */2 * * * python /app/app-updater.py >> /var/log/cron.log 2>&1" >> /etc/crontab
 
-# run crond as main process of container
-CMD ["cron", "-f"]
+# Expose port 8000 for the http.server
+EXPOSE 8000
+
+# Set the command to run the http.server
+CMD python -m http.server
