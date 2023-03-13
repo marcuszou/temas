@@ -59,7 +59,7 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
    1B) run the docker image into a container:
 
    ```
-   docker run -d -p 8000:8000 --name "TEMAS-0.7.1" -t temas:0.7.1
+   docker run -d -p 8000:8000 --name "TEMAS-0.7.1" -v /web:/app -t temas:0.7.1
    ```
 
    1C) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.
@@ -117,7 +117,7 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
    3C) Run the docker image into a container:
    
    ```
-   docker run -d -p 8000:8000 --name "TEMAS-0.7.2" -t mytemas:0.7.2
+   docker run -d -p 8000:8000 --name "TEMAS-0.7.2" -v /web:/app -t mytemas:0.7.2
    ```
    
    3D) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.

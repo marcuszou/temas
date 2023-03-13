@@ -12,7 +12,7 @@ COPY . /app
 RUN pip install -r requirements.txt
 
 # Create a cron job that runs the Python script every hour
-RUN echo "0 */2 * * * python /app/app-updater.py >> /var/log/cron.log 2>&1" >> /etc/crontab
+RUN echo "*/5 * * * * python /app/app-updater.py >> /var/log/cron.log 2>&1" >> /etc/cron.d/mycrontab
 
 # Expose port 8000 for the http.server
 EXPOSE 8000

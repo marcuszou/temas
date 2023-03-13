@@ -200,7 +200,7 @@ def generate_html(dataframe: pd.DataFrame):
 
 # Give a go
 table_interact = generate_html(df_tbl_1)
-with open("output/table_interact_koeri.html", 'w') as f:
+with open("web/table_interact_koeri.html", 'w') as f:
     f.write(table_interact)
 
 # Another Pretty HTML Data Table
@@ -228,7 +228,7 @@ html_table_bluelight = build_table(df_tbl_1, 'blue_light',
 html_table_bluelight = '<div style="text-align:center">' + html_table_bluelight + '</div>'
 
 # write the HTML table to a file
-with open('output/table_bluelight_koeri.html', 'w') as f:
+with open('web/table_bluelight_koeri.html', 'w') as f:
     f.write(html_table_bluelight)
 
 print('Mission #5 - Completed.\n')
@@ -304,7 +304,7 @@ legend_bar.add_to(bubbleMap)
 bubbleMap.add_child(folium.LatLngPopup())
 
 # Eventually save map to interactive HTML file
-bubbleMap.save("output/map_bubble_koeri.html")
+bubbleMap.save("web/map_bubble_koeri.html")
 
 ## 6.2 Heat Map
 
@@ -329,7 +329,7 @@ plugins.HeatMap(heatMapData,
                 ).add_to(heatMap)
 
 # Save Heatmap
-heatMap.save("output/map_heat_koeri.html")
+heatMap.save("web/map_heat_koeri.html")
 
 print('Mission #6 - Completed.\n')
 
