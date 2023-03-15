@@ -1,1 +1,1 @@
-*/5 * * * * /usr/local/bin/python /app/app-updater.py >> /var/log/cron.log
+*/5 * * * * /usr/local/bin/python /app/app-updater.py >> /app/log/cronlog.txt

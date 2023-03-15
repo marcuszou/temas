@@ -1,8 +1,9 @@
 ## TEMAS - Turkey Earthquake Monitoring and Analysis System
 
 # PART 0. Prep
-
+import branca
 from branca.colormap import StepColormap
+import bs4
 from bs4 import BeautifulSoup
 import datetime as dt
 import folium
