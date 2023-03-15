@@ -2,20 +2,24 @@
 FROM python:3.10.6-slim
 LABEL maintainer="https://github.com/marcuszou/"
 
-# Update, install cron
-RUN apt-get update && apt-get install cron -y
+# Update, install cron and some utilities
+RUN apt-get update && apt-get install cron nano procps -y
+RUN pip install --upgrade pip
+
+# Copy the cron job that runs the Python script every hour
+COPY mycrontab /etc/cron.d/mycrontab
+RUN touch /var/log/cron.log
+RUN chmod 0644 /etc/cron.d/mycrontab
+RUN crontab /etc/cron.d/mycrontab
 
 # Copy files to work directory
 WORKDIR /app
 COPY . /app
-# Install Python libraries
+# Install Python libraries in the WORKDIR!
 RUN pip install -r requirements.txt
-
-# Create a cron job that runs the Python script every hour
-RUN echo "*/5 * * * * python /app/app-updater.py >> /var/log/cron.log 2>&1" >> /etc/cron.d/mycrontab
 
 # Expose port 8000 for the http.server
 EXPOSE 8000
 
-# Set the command to run the http.server
-CMD python -m http.server
+# Run cron daemon and Launch the webserver - http.server
+CMD cron && python -m http.server 8000

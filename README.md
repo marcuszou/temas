@@ -18,7 +18,9 @@ by: Marcus Zou
 
 * This full-stack project is to keep tracking and visualize the earthquake events in Turkey, from January 2023 onwards. 
 
-* The original dataset (the base and the update) are mainly obtained from [Kandilli Observatory](http://www.koeri.boun.edu.tr/).
+* The original dataset (the base and the update) are mainly obtained from [Automatic Solutions page of Kandilli Observatory](http://www.koeri.boun.edu.tr/sismo/2/latest-earthquakes/automatic-solutions/).
+
+* If the Automatic Solutions page stops updating, the alternative source is the [last earthquake snapshot](http://www.koeri.boun.edu.tr/scripts/lasteq.asp).
 
 * The data and maps shall be updated daily (in the early morning of MST) and automatically, then you may find a little out-of-date if you access our project website during the daytime of Mountain Standard Time (GMT-7).
 
@@ -53,13 +55,13 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
    1A) pull down the very Docker image:
 
    ```shell
-   docker pull marcuszou/temas:0.7.1
+   docker pull marcuszou/temas:0.7.2
    ```
 
    1B) run the docker image into a container:
 
    ```
-   docker run -d -p 8000:8000 --name "TEMAS-0.7.1" -v /web:/app -t temas:0.7.1
+   docker run -d -p 8000:8000 --name "TEMAS-0.7.2" -v /web:/app -t temas:0.7.2
    ```
 
    1C) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.
@@ -90,9 +92,10 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
    * for `Linux/Mac` user, please use the `crontab` file:
 
      ```
+     touch /var/log/cron.log
      cron ./mycrontab
      ```
-
+   
    * for `Windows` user, please use the `Task Scheduler` to schedule to run `./app-updater.py` periodically.
    
    2D) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.
