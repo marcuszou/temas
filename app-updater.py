@@ -9,7 +9,6 @@ import folium
 from folium import plugins
 import pandas as pd
 import requests
-import reverse_geocoder as rg
 import sqlite3
 
 print('\nTEMAS 0.7\n\nMission Started on', dt.datetime.now(), ', be patient....\n')

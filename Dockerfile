@@ -4,12 +4,13 @@ LABEL maintainer="https://github.com/marcuszou/"
 
 # Update, install cron and some utilities
 RUN apt-get update && apt-get install cron nano procps -y
+# /usr/sbin/service cron start
 RUN pip install --upgrade pip
 
 # Copy the cron job that runs the Python script every hour
 COPY mycrontab /etc/cron.d/mycrontab
 RUN touch /var/log/cron.log
-RUN chmod 0644 /etc/cron.d/mycrontab
+RUN chmod +x /etc/cron.d/mycrontab
 RUN crontab /etc/cron.d/mycrontab
 
 # Copy files to work directory

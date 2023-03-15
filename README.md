@@ -4,31 +4,24 @@
 
 
 
-Project: TEMAS - Turkey Earthquake Monitoring and Analysis System
+Project: **TEMAS** - **T**urkey **E**arthquake **M**onitoring and **A**nalysis **S**ystem
 
-Latest Version: 0.7.2
-
-Released: 13 March 2023 
-
-by: Marcus Zou
+Latest Version: 0.7.2  |  Released: 13 March 2023  |  by: Marcus Zou
 
 
 
-## Project Intro
+## Project Features
 
 * This full-stack project is to keep tracking and visualize the earthquake events in Turkey, from January 2023 onwards. 
+* The data table and maps shall be updated in a real-time fashion (every 2 hours) and automatically.
+* It's alive at https://temas.corunsol.net.
 
+## Technical Intro
+
+* The project landing page is: `index.html` while `app-updater.py` is a task to be scheduled every day.
+* The `tuner_all-in-one_koeri_data.ipynb` is a debugging Jupyter notebook where I made the `app-updater.py` accordingly. Feel free to go through the steps out there.
 * The original dataset (the base and the update) are mainly obtained from [Automatic Solutions page of Kandilli Observatory](http://www.koeri.boun.edu.tr/sismo/2/latest-earthquakes/automatic-solutions/).
-
 * If the Automatic Solutions page stops updating, the alternative source is the [last earthquake snapshot](http://www.koeri.boun.edu.tr/scripts/lasteq.asp).
-
-* The data and maps shall be updated daily (in the early morning of MST) and automatically, then you may find a little out-of-date if you access our project website during the daytime of Mountain Standard Time (GMT-7).
-
-* The project landing page is: index.html while app.py is a task to be scheduled every day.
-
-* The Jupyter Notebook file of `tuner_all-in-one_koeri_data.ipynb` is a debugging notebook where I made the app.py accordingly. Feel free to go through the steps out there.
-
-* The final project can be accessed at: https://temas.corunsol.net. 
 
 ## Toolsets
 
@@ -38,15 +31,9 @@ by: Marcus Zou
  3. Docker deployment
 ```
 
-## Pre-requisite Libraries
-
-```
-  pip install -r requirements.txt
-```
 
 
-
-## How to use the project?
+## How to Make Use of the Project
 
 Two ways to use my project (**Method #1 and #3 are preferred** since it's just a piece of cake):
 
@@ -114,7 +101,7 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
    
    ```
    cd earthquake-in-turkey
-   docker build -t mytemas:0.7.2 .
+   docker build --no-cache -t mytemas:0.7.2 .
    ```
    
    3C) Run the docker image into a container:
