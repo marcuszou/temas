@@ -15,7 +15,11 @@ RUN crontab /app/mycrontab
 
 # Organize nginx html folder
 RUN rm -rf /usr/share/nginx/html/*
-RUN ln -s /usr/share/nginx/html/ /app/web
+COPY /app/web/* /usr/share/nginx/html/
+
+## please tune the parameters in the confiles
+## /etc/nginx/nginx.conf 
+## /etc/nginx/conf.d/default.conf
 
 # Ops on entrypoint-wrapper
 RUN chmod +x /app/entrypoint-wrapper.sh
