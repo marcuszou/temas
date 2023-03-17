@@ -6,20 +6,21 @@
 
 Project: **TEMAS** - **T**urkey **E**arthquake **M**onitoring and **A**nalysis **S**ystem
 
-Latest Version: 0.7.2  |  Released: 13 March 2023  |  by: Marcus Zou
+Latest Version: 0.8.0  |  Released: 17 March 2023  |  by: Marcus Zou
 
 
 
 ## Project Features
 
 * This full-stack project is to keep tracking and visualize the earthquake events in Turkey, from January 2023 onwards. 
-* The data table and maps shall be updated in a real-time fashion (every 2 hours) and automatically.
+* The data table and maps shall be updated in a real-time fashion (every 2 hours or per your plan) and automatically.
 * It's alive at https://temas.corunsol.net.
 
 ## Technical Intro
 
 * The project landing page is: `index.html` while `app-updater.py` is a task to be scheduled every day.
 * The `tuner_all-in-one_koeri_data.ipynb` is a debugging Jupyter notebook where I made the `app-updater.py` accordingly. Feel free to go through the steps out there.
+* Made 2 editions of Docker images: **temas:0.8.0-ng** (nginx as web server) and temas:0.8.0-py (http.server as web server).
 * The original dataset (the base and the update) are mainly obtained from [Automatic Solutions page of Kandilli Observatory](http://www.koeri.boun.edu.tr/sismo/2/latest-earthquakes/automatic-solutions/).
 * If the Automatic Solutions page stops updating, the alternative source is the [last earthquake snapshot](http://www.koeri.boun.edu.tr/scripts/lasteq.asp).
 
@@ -28,7 +29,8 @@ Latest Version: 0.7.2  |  Released: 13 March 2023  |  by: Marcus Zou
 ```
  1. Python (3.10.6) + Folium library + Web Scraping technology
  2. Back-end databasing (SQLite3, will seek mySQL if the dataset gets big in the future)
- 3. Docker deployment
+ 3. Bootstrapping the index.html
+ 4. Docker deployment
 ```
 
 
@@ -42,16 +44,18 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
    1A) pull down the very Docker image:
 
    ```shell
-   docker pull marcuszou/temas:0.7.2
+   docker pull marcuszou/temas:0.8.0
    ```
 
-   1B) run the docker image into a container:
+   1B) run the docker image into a container while mapping "**./web**" folder on host to "**/app**" folder in the Docker container:
 
-   ```
-   docker run -d -p 8000:8000 --name "TEMAS-0.7.2" -v /web:/app -t temas:0.7.2
+   ```bash
+   docker run -d -p 8001:80 --name "TEMAS-0.8.0-ng" -v ./web:/app -t temas:0.8.0-ng
+   # or
+   docker run -d -p 8001:8000 --name "TEMAS-0.8.0-py" -v ./web:/app -t temas:0.8.0-py
    ```
 
-   1C) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.
+   1C) then you can launch a web browser to browse to - http://localhost:8001 to enjoy the project.
 
    
 
@@ -59,7 +63,7 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
 
    
 
-2. **Fork-Git-Repo** method:
+2. **Fork-the-Repo** method:
 
    2A) Clone the very repo:
 
@@ -71,7 +75,7 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
 
    ```
    cd earthquake-in-turkey
-   python ./app-httpsvr.py
+   python ./web/app-httpsvr.py
    ```
 
    2C) schedule the `app-updater.py` as below:
@@ -125,6 +129,8 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
   
 
 ## Versions
+
+* v0.8.0 build 2023-03-17 - Dockerfile tuned and nginx docker container added. Schedule the app-updater.py on the Host.
 
 * v0.7.2 build 2023-03-13 - Changes on the job scheduler, .ignore files and finalizing. Pushed to github and cloud.
 
