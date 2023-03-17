@@ -15,7 +15,7 @@ RUN crontab /app/mycrontab
 
 # Organize nginx html folder
 RUN rm -rf /usr/share/nginx/html/*
-COPY /app/web/* /usr/share/nginx/html/
+COPY ../web/ /usr/share/nginx/html/
 
 ## please tune the parameters in the confiles
 ## /etc/nginx/nginx.conf 
