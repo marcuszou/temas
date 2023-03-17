@@ -20,7 +20,7 @@ Latest Version: 0.8.0  |  Released: 17 March 2023  |  by: Marcus Zou
 
 * The project landing page is: `index.html` while `app-updater.py` is a task to be scheduled every day.
 * The `tuner_all-in-one_koeri_data.ipynb` is a debugging Jupyter notebook where I made the `app-updater.py` accordingly. Feel free to go through the steps out there.
-* Made 2 editions of Docker images: **temas:0.8.0-ng** (nginx as web server) and temas:0.8.0-py (http.server as web server).
+* Made special edition of Docker image: **temas:0.8.0** (nginx as web server + cron).
 * The original dataset (the base and the update) are mainly obtained from [Automatic Solutions page of Kandilli Observatory](http://www.koeri.boun.edu.tr/sismo/2/latest-earthquakes/automatic-solutions/).
 * If the Automatic Solutions page stops updating, the alternative source is the [last earthquake snapshot](http://www.koeri.boun.edu.tr/scripts/lasteq.asp).
 
@@ -37,7 +37,7 @@ Latest Version: 0.8.0  |  Released: 17 March 2023  |  by: Marcus Zou
 
 ## How to Make Use of the Project
 
-Two ways to use my project (**Method #1 and #3 are preferred** since it's just a piece of cake):
+Two ways to use my project (**Method #1 is preferred** since it's just a piece of cake):
 
 1. **Docker-Pull** method:
 
@@ -50,11 +50,9 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
    1B) run the docker image into a container while mapping "**./web**" folder on host to "**/app**" folder in the Docker container:
 
    ```bash
-   docker run -d -p 8001:80 --name "TEMAS-0.8.0-ng" -v ./web:/app -t temas:0.8.0-ng
-   # or
-   docker run -d -p 8001:8000 --name "TEMAS-0.8.0-py" -v ./web:/app -t temas:0.8.0-py
+   docker run -d -p 8001:80 --name "TEMAS-0.8.0" -v ./web:/app -t temas:0.8.0
    ```
-
+   
    1C) then you can launch a web browser to browse to - http://localhost:8001 to enjoy the project.
 
    
@@ -63,58 +61,28 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
 
    
 
-2. **Fork-the-Repo** method:
-
-   2A) Clone the very repo:
-
-   ```
-   git clone https://github.com/marcuszou/earthquake-in-turkey.git
-   ```
-
-   2B) enter into the project folder and run the simple web server - Python module http.server:
-
-   ```
-   cd earthquake-in-turkey
-   python ./web/app-httpsvr.py
-   ```
-
-   2C) schedule the `app-updater.py` as below:
-
-   * for `Linux/Mac` user, please use the `crontab` file:
-
-     ```
-     touch /var/log/cron.log
-     cron ./mycrontab
-     ```
-   
-   * for `Windows` user, please use the `Task Scheduler` to schedule to run `./app-updater.py` periodically.
-   
-   2D) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.
-   
-   
-   
 3. **Fork-n-Dock** method:
    
    3A) Clone the very repo:
    
    ```
-   git clone https://github.com/marcuszou/earthquake-in-turkey.git
+   git clone https://github.com/marcuszou/temas.git
    ```
    
    3B) enter into the project folder and build a docker image:
    
    ```
-   cd earthquake-in-turkey
-   docker build --no-cache -t mytemas:0.7.2 .
+   cd temas-main
+   docker build --no-cache -t mytemas .
    ```
    
    3C) Run the docker image into a container:
    
    ```
-   docker run -d -p 8000:8000 --name "TEMAS-0.7.2" -v /web:/app -t mytemas:0.7.2
+   docker run -d -p 8001:80 --name "TEMAS" -v /web:/app -t mytemas
    ```
    
-   3D) then you can launch a web browser to browse to - http://localhost:8000 to enjoy the project.
+   3D) then you can launch a web browser to browse to - http://localhost:8001 to enjoy the project.
 
 ## Special Technical Report when Dockerizing the Project
 
@@ -122,9 +90,9 @@ Two ways to use my project (**Method #1 and #3 are preferred** since it's just a
 
 * The small-sized `alpine` variant of Python docker images are kinda problematic due to (1) not updating Python to 3.10.6, but 3.10.0 and (2) lack of some core libraries leading to unable to install the `pandas` library (which is unbearable).
 
-* Then the best smaller docker image shall be: `Python-3.10.6-slim` (45 MB only for downloading), which need you to install `cron` module in the `Dockerfile` though. 
+* Then the best smaller docker image shall be: `Python-3.10.6-slim` (45 MB only for downloading), which need you to schedule the `cron` job on the host though. 
 
-* A light-weight Python module based Http Server has to run to serve the http requests to our website (`index.html`).
+* Eventually we are able to run the cron job within nginx Docker container, which ease our tasks extremely.
 
   
 
